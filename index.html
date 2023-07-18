@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Thermometer</title>
+    <meta charset="utf-8">
+    <meta name="robots" content="noindex,follow">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+    #circle {
+        background-color: rgba(0, 0, 0, 0.3);
+        width: 250px;
+        height: 250px;
+        border-radius: 50%;
+        text-align: center;
+        border: 2px solid #ffe720;
+        color: #ffe720;
+        z-index: 50;
+        font-family: "HelveticaNeueUltraLight", "HelveticaNeue-Ultra-Light", "Helvetica Neue Ultra Light", "HelveticaNeue", "Helvetica Neue", 'TeXGyreHerosRegular', "Arial", sans-serif;
+        font-weight: 100;
+        font-stretch: normal;
+        font-size: 65px;
+        position: relative;
+    }
+
+    .circle-text {
+        display: block;
+        text-align: center;
+        text-transform: uppercase;
+        position: absolute;
+        top: 42%;
+        /* Unfortunately transform needs to be prefixed for webkit browsers :( */
+        -webkit-transform: translate(0, -50%);
+        transform: translate(0, -50%);
+        width: 100%;
+    }
+    </style>
+</head>
+
+<body>
+    <div id="circle"><span class="circle-text" id="temperature"></span><br>
+        <p class="circle-text" style="font-size:.2em;margin-top:60px">Downtown Denver temp</p>
+        <p id="current-time" class="circle-text" style="font-size:.2em;margin-top:77px"></p>
+    </div>
+    <script>
+    var rawData = { "coord": { "lon": -104.9847, "lat": 39.7392 }, "weather": [{ "id": 800, "main": "Clear", "description": "clear sky", "icon": "01d" }], "base": "stations", "main": { "temp": 35.23, "feels_like": 40.89, "temp_min": 37.96, "temp_max": 48.54, "pressure": 1005, "humidity": 30 }, "visibility": 10000, "wind": { "speed": 7, "deg": 230, "gust": 15.99 }, "clouds": { "all": 2 }, "dt": 1671664059, "sys": { "type": 2, "id": 2004334, "country": "US", "sunrise": 1671632253, "sunset": 1671665915 }, "timezone": -25200, "id": 5419384, "name": "Denver", "cod": 200 }
+    var currentTemp = rawData.main.temp;
+    document.getElementById('temperature').innerHTML = currentTemp + '&deg;';
+
+    var currentTime = document.lastModified;
+
+    document.getElementById("current-time").innerHTML = currentTime;
+
+    var tempNow = [];
+    tempNow.push(currentTemp);
+    var allTemps = [40.23];
+
+
+    function updateArray(latest, current) {
+        for (let i = 0, len = current.length; i < len; i++) {
+            for (let g = 0, len = latest.length; g < len; g++) {
+                // if (latest[g].module.id === current[i].module.id) {
+                //     current[i] = latest[g];
+                //     break;
+                // }
+                //current.push(currentTemp);
+            }
+            current.push(currentTemp);
+        }
+
+        return current;
+    }
+    let test = updateArray(tempNow, allTemps);
+    console.log(test);
+    </script>
+</body>
+
+</html>
